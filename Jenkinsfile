@@ -10,8 +10,9 @@ pipeline {
 
                     // Hacer una copia de los datos actuales
                     sh 'sqlite3 Employees.db ".dump" > backup.sql'
-
-                    // Cargar el nuevo esquema
+                
+                    // Cargar el nuevo esquema borrando la db
+                    sh 'rm Employees.db'
                     sh 'sqlite3 Employees.db < sqlite.sql'
 
                     // Restaurar los datos respaldados anteriormente
