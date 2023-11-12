@@ -11,9 +11,6 @@ pipeline {
                     // Hacer una copia de los datos actuales
                     sh 'sqlite3 Employees.db ".dump" > backup.sql'
 
-                    // Eliminar el esquema actual
-                    sh 'sqlite3 Employees.db < drop.sql'
-
                     // Cargar el nuevo esquema
                     sh 'sqlite3 Employees.db < sqlite.sql'
 
