@@ -13,7 +13,7 @@ pipeline {
                 
                     // Cargar el nuevo esquema borrando la db
                     sh 'rm Employees.db'
-                    sh 'sqlite3 Employees.db < sqlite.sql'
+                    // sh 'sqlite3 Employees.db < sqlite.sql'
 
                     // Restaurar los datos respaldados anteriormente
                     sh 'sqlite3 Employees.db < backup.sql'
