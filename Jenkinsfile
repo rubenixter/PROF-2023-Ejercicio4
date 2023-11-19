@@ -28,7 +28,7 @@ pipeline {
             script {
                 currentBuild.result = 'SUCCESS'
                 echo 'Database maintenance successful!'
-                updateGitHubStatus context: 'Database Maintenance', description: 'Success', state: 'SUCCESS'
+               
             }
         }
         failure {
@@ -36,7 +36,7 @@ pipeline {
             script {
                 currentBuild.result = 'FAILURE'
                 echo 'Database maintenance failed!'
-                updateGitHubStatus context: 'Database Maintenance', description: 'Failed', state: 'FAILURE'
+                
             }
         }
     }
