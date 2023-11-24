@@ -5,7 +5,7 @@ pipeline {
         stage('Crea el Webhooks en caso de que no exista') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'TOKEN_REPO_PROFESOR1', variable: 'GITHUB_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'Ruben', variable: 'GITHUB_TOKEN')]) {
                         def existingWebhook = sh(
                             script: 'curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/Luckvill/Test/hooks',
                             returnStdout: true).trim()
