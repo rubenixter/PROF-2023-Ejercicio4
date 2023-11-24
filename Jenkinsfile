@@ -2,6 +2,31 @@ pipeline {
     agent any
 
     stages {
+        stage('Crea el Webhook en caso de que no exista') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'TOKEN_REPO_PROFESOR1', variable: 'GITHUB_TOKEN')]) {
+                        def existingWebhook = sh(
+                            script: 'curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/Luckvill/Test/hooks',
+                            returnStdout: true).trim()
+                        def URL = "http://" + sh(script: 'curl -s ifconfig.me', returnStdout: true).trim() + ":8080/ghprbhook/"
+                        // Verifica si el webhook ya existe en el repo, si no lo crea
+                        if (!existingWebhook.contains("$URL")) {
+                        def payload = '{"name": "web", "active": true, "events": ["pull_request"], "config": {"url": "' + URL + '", "content_type": "json"}}'
+                        sh """
+                            curl -X POST \
+                            -H "Authorization: token $GITHUB_TOKEN" \
+                            -H "Accept: application/vnd.github.v3+json" \
+                            -d '${payload}' \
+                            https://api.github.com/repos/Luckvill/Test/hooks
+                            """
+                        } else {
+                            echo 'El webhook ya existe.'
+                        }
+                    }
+                }
+            }
+        }
         stage('Database Maintenance') {
             steps {
                 script {
